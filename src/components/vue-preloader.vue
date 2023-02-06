@@ -1,21 +1,27 @@
 <template>
   <div
     :class="$style.preloader"
-    :style="preloaderStyle"
+    :style="preloader"
   >
-    <slot name="container" v-bind="{ width }">
+    <slot
+      name="container"
+      v-bind="{ percent }"
+    >
       <div
-        v-if="width < 100"
+        v-if="percent < 100"
         :class="$style.percentBar"
+        :style="percentBackgroundColor"
       >
-        {{ width }} %
+        {{ percent }} %
       </div>
       <div
-        v-if="width < 100"
+        v-if="percent < 100"
         :class="$style.loadingWrapper"
       >
-        <div ref="loadingbar"
+        <div
+          ref="loadingbar"
           :class="$style.loadingBar"
+          :style="barBackgroundColor"
         />
       </div>
     </slot>
@@ -24,30 +30,70 @@
 <script>
 export default {
   name: "VuePreloader",
+  props: {
+    backgroundColor: {
+      type: String,
+      default: () => {
+        return '#091a28'
+      }
+    },
+    barColor: {
+      type: String,
+      default: () => {
+        return '#ffffff'
+      }
+    },
+    percentColor: {
+      type: String,
+      default: () => {
+        return '#ffffff'
+      }
+    },
+    percentSpeed: {
+      type: Number,
+      default: () => {
+        return 15;
+      }
+    },
+    transitionSpeed: {
+      type: Number,
+      default: () => {
+        return 1400;
+      }
+    }
+  },
   data() {
     return {
-      width: 0
+      percent: 0
     };
   },
   computed: {
-    preloaderStyle() {
-      return this.width >= 100 ? "width: 0%" : "";
+    barBackgroundColor() {
+      return `background-color: ${this.barColor};`;
     },
+    percentBackgroundColor() {
+      return `color: ${this.percentColor};`;
+    },
+    preloader() {
+      return this.percent >= 100
+        ? `width: 0%; background-color: ${this.backgroundColor}; transition: all ${this.transitionSpeed}ms ease-in-out`
+        : `background-color: ${this.backgroundColor}; transition: all ${this.transitionSpeed}ms ease-in-out`;
+    }
   },
   watch: {
-    width: {
-      handler(width) {
-        if (width < 100) {
+    percent: {
+      handler(percent) {
+        if (percent < 100) {
           setTimeout(() => {
-            this.width = width += 1;
-            this.$refs.loadingbar.style.width = `${this.width}%`;
-          }, 15);
+            this.percent = percent += 1;
+            this.$refs.loadingbar.style.width = `${this.percent}%`;
+          }, this.percentSpeed);
         }
       },
     },
   },
   mounted() {
-    this.width = this.width += 1;
+    this.percent = this.percent += 1;
   }
 };
 </script>
@@ -62,13 +108,10 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: #091a28;
-  transition: all 1.4s ease-in-out;
   z-index: 100;
 }
 
 .percentBar {
-  color: white;
   transition: all 0.2s ease-in-out;
 }
 
@@ -80,6 +123,5 @@ export default {
 .loadingBar {
   width: 1%;
   padding: 1px 0;
-  background-color: white;
 }
 </style>
