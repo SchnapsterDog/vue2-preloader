@@ -28,39 +28,16 @@
   </div>
 </template>
 <script>
+import VueTypes from '../utils/vuetypes';
+
 export default {
   name: "VuePreloader",
   props: {
-    backgroundColor: {
-      type: String,
-      default: () => {
-        return '#091a28'
-      }
-    },
-    barColor: {
-      type: String,
-      default: () => {
-        return '#ffffff'
-      }
-    },
-    percentColor: {
-      type: String,
-      default: () => {
-        return '#ffffff'
-      }
-    },
-    percentSpeed: {
-      type: Number,
-      default: () => {
-        return 15;
-      }
-    },
-    transitionSpeed: {
-      type: Number,
-      default: () => {
-        return 1400;
-      }
-    }
+    backgroundColor: VueTypes.string.def('#091a28'),
+    barColor: VueTypes.string.def('#ffffff'),
+    percentColor: VueTypes.string.def('#ffffff'),
+    percentSpeed:  VueTypes.number.def(15),
+    transitionSpeed:  VueTypes.number.def(1400)
   },
   data() {
     return {
