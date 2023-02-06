@@ -3,18 +3,22 @@
     :class="$style.preloader"
     :style="preloaderStyle"
   >
-    <div
-      v-if="width < 100"
-      :class="$style.percentBar"
-    >
-      {{ width }} %
-    </div>
-    <div
-      v-if="width < 100"
-      :class="$style.loadingWrapper"
-    >
-      <div :class="$style.loadingBar" ref="loadingbar" />
-    </div>
+    <slot name="container" v-bind="{ width }">
+      <div
+        v-if="width < 100"
+        :class="$style.percentBar"
+      >
+        {{ width }} %
+      </div>
+      <div
+        v-if="width < 100"
+        :class="$style.loadingWrapper"
+      >
+        <div ref="loadingbar"
+          :class="$style.loadingBar"
+        />
+      </div>
+    </slot>
   </div>
 </template>
 <script>
@@ -36,7 +40,7 @@ export default {
         if (width < 100) {
           setTimeout(() => {
             this.width = width += 1;
-            this.$refs.loadingbar.style.width = this.width + "%";
+            this.$refs.loadingbar.style.width = `${this.width}%`;
           }, 15);
         }
       },
