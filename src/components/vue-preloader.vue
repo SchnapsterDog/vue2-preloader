@@ -1,59 +1,45 @@
 <template>
-	<div 
-    class="preloader"
-    :style="preloaderStyle"
-  >
-		<div
-      v-if="showPercent"
-      class="percent"
-    >
-			{{ width }} %
-		</div>
-		<div
-      v-if="showBar"
-      class="bar"
-    >
-			<div
-        class="barconfirm"
-        ref="barconfirm"
-      />
+	<div class="preloader" :style="preloaderStyle">
+		<div v-if="showPercent" class="percent">{{ width }} %</div>
+		<div v-if="showBar" class="bar">
+			<div class="barconfirm" ref="barconfirm" />
 		</div>
 	</div>
 </template>
 <script>
 export default {
-	name: 'VuePreloader',
+	name: "VuePreloader",
 	data() {
 		return {
 			showBar: true,
-      showPercent: true,
-      width: 0
-		}
+			showPercent: true,
+			width: 0,
+		};
 	},
 	computed: {
 		preloaderStyle() {
-			return this.width >= 100 ? 'width: 0%' : ''
-		}
+			return this.width >= 100 ? "width: 0%" : "";
+		},
 	},
 	watch: {
 		width: {
 			handler(width) {
 				if (width < 100) {
 					setTimeout(() => {
-						this.width = width += 1
-						this.$refs.barconfirm.style.width = this.width + '%'
-					}, 15)
+						this.width = width += 1;
+						this.$refs.barconfirm.style.width = this.width + "%";
+					}, 15);
 				} else {
-					this.showBar = false
-					this.showPercent = false
+					this.showBar = false;
+					this.showPercent = false;
 				}
-			}
-		}
+			},
+		},
 	},
 	mounted() {
-		this.width = this.width += 1
-	}
-}
+		this.width = this.width += 1;
+	},
+};
 </script>
 <style lang="css">
 .preloader {
