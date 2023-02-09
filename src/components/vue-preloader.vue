@@ -37,6 +37,7 @@ export default {
     barColor: VueTypes.string.def('#ffffff'),
     percentColor: VueTypes.string.def('#ffffff'),
     percentSpeed:  VueTypes.number.def(15),
+    transitionOn: VueTypes.bool.def(true),
     transitionSpeed:  VueTypes.number.def(1400)
   },
   data() {
