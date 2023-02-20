@@ -1,12 +1,9 @@
 <template>
-  <div
+	<div
     :class="$style.preloader"
     :style="preloader"
   >
-    <slot
-      name="container"
-      v-bind="{ percent }"
-    >
+    <slot v-bind="{ percent }">
       <div
         v-if="percent < 100"
         :class="$style.percentBar"
@@ -63,16 +60,35 @@ export default {
       handler(percent) {
         if (percent < 100) {
           setTimeout(() => {
-            this.percent = percent += 1;
-            this.$refs.loadingbar.style.width = `${this.percent}%`;
-          }, this.percentSpeed);
+            this.percent = percent += 1
+            this.$refs.loadingbar.style.width = `${this.percent}%`
+          }, this.percentSpeed)
+        } else {
+          this.transitionIsOver()
         }
       },
     },
   },
+  methods: {
+    setOverflowHidden() {
+      document.body.style.overflow = 'hidden'
+    },
+    setOverflowAuto() {
+      document.body.style.overflow = 'auto'
+    },
+    transitionIsOver() {
+      setTimeout(() => {
+        this.$emit('finish-loading')
+        this.setOverflowAuto()
+      }, this.transitionSpeed)
+    },
+  },
+  beforeMount() {
+    this.setOverflowHidden()
+  },
   mounted() {
-    this.percent = this.percent += 1;
-  }
+    this.percent = this.percent += 1
+  },
 };
 </script>
 <style lang="css" module>
