@@ -1,13 +1,17 @@
 <template>
 	<div
     :class="$style.preloader"
-    :style="preloader"
+    :style="[
+      preloaderBackgroundColor,
+      preloaderTransition,
+      preloaderWidth
+    ]"
   >
-    <slot v-bind="{ percent }">
+    <slot v-bind="{ color, percent }">
       <div
         v-if="percent < 100"
         :class="$style.percentBar"
-        :style="percentBackgroundColor"
+        :style="{ color }"
       >
         {{ percent }} %
       </div>
@@ -18,7 +22,7 @@
         <div
           ref="loadingbar"
           :class="$style.loadingBar"
-          :style="barBackgroundColor"
+          :style="{ backgroundColor: color }"
         />
       </div>
     </slot>
@@ -31,9 +35,8 @@ export default {
   name: "VuePreloader",
   props: {
     backgroundColor: VueTypes.string.def('#091a28'),
-    barColor: VueTypes.string.def('#ffffff'),
-    percentColor: VueTypes.string.def('#ffffff'),
-    percentSpeed:  VueTypes.number.def(15),
+    color: VueTypes.string.def('#ffffff'),
+    loadingSpeed:  VueTypes.number.def(15),
     transitionOn: VueTypes.bool.def(true),
     transitionSpeed:  VueTypes.number.def(1400)
   },
@@ -43,16 +46,14 @@ export default {
     };
   },
   computed: {
-    barBackgroundColor() {
-      return `background-color: ${this.barColor};`;
+    preloaderBackgroundColor() {
+      return { backgroundColor: this.backgroundColor };
     },
-    percentBackgroundColor() {
-      return `color: ${this.percentColor};`;
+    preloaderTransition() {
+      return { transition: `all ${this.transitionSpeed}ms ease-in-out` };
     },
-    preloader() {
-      return this.percent >= 100
-        ? `width: 0%; background-color: ${this.backgroundColor}; transition: all ${this.transitionSpeed}ms ease-in-out`
-        : `background-color: ${this.backgroundColor}; transition: all ${this.transitionSpeed}ms ease-in-out`;
+    preloaderWidth() {
+      return this.percent >= 100 ? { width: '0%' } : '';
     }
   },
   watch: {
@@ -62,7 +63,7 @@ export default {
           setTimeout(() => {
             this.percent = percent += 1
             this.$refs.loadingbar.style.width = `${this.percent}%`
-          }, this.percentSpeed)
+          }, this.loadingSpeed)
         } else {
           this.transitionIsOver()
         }
@@ -70,11 +71,11 @@ export default {
     },
   },
   methods: {
-    setOverflowHidden() {
-      document.body.style.overflow = 'hidden'
-    },
     setOverflowAuto() {
       document.body.style.overflow = 'auto'
+    },
+    setOverflowHidden() {
+      document.body.style.overflow = 'hidden'
     },
     transitionIsOver() {
       setTimeout(() => {
