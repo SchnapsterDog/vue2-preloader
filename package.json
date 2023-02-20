@@ -8,8 +8,8 @@
     "name": "Oliver Trajceski",
     "email": "oliver@akrinum.com"
   },
-  "repository": "https://github.com/SchnapsterDog/vue-preloader",
-  "bugs": "https://github.com/SchnapsterDog/vue-preloader/issues",
+  "repository": "https://github.com/SchnapsterDog/vue2-preloader",
+  "bugs": "https://github.com/SchnapsterDog/vue2-preloader/issues",
   "keywords": [
     "preloader",
     "transition",
