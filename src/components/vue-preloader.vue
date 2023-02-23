@@ -61,15 +61,21 @@ export default {
         if (percent < 100) {
           setTimeout(() => {
             this.percent = percent += 1
-            this.$refs.loadingbar.style.width = `${this.percent}%`
+            if (this.$refs.loadingbar) {
+              this.$refs.loadingbar.style.width = `${this.percent}%`
+            }
           }, this.loadingSpeed)
         } else {
+          this.loadingIsOver()
           this.transitionIsOver()
         }
       },
     },
   },
   methods: {
+    loadingIsOver() {
+      this.$emit('loading-is-over')
+    },
     setOverflowAuto() {
       document.body.style.overflow = 'auto'
     },
