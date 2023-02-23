@@ -80,14 +80,14 @@ layout/default.vue file in nuxt2:
 	  <slot />
   </TemplatesPage>
   <TemplatesFooter />
-  <VuePreloader
+  <vue-preloader
     background-color="#091a28"
     color="#ffffff"
     :loading-speed="25"
     :transition-speed="1400"
     @transition-is-over="transitionIsOver"
     @loading-is-over="loadingIsOver"
-  </VuePreloader>
+  ></vue-preloader>
 </div>
 ```
 To register a component globally, you would typically need to import the component in your main application file. This would allow you to use the component in any of your Vue templates, without having to import it separately in each individual component.
