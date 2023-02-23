@@ -1,5 +1,5 @@
 {
-  "name": "vue-preloader",
+  "name": "vue2-preloader",
   "description": "",
   "version": "1.0.0",
   "private": false,
@@ -23,10 +23,10 @@
     "vue-loader"
   ],
   "license": "MIT",
-  "main": "dist/vue-preloader.ssr.js",
-  "browser": "dist/vue-preloader.esm.js",
-  "module": "dist/vue-preloader.esm.js",
-  "unpkg": "dist/vue-preloader.min.js",
+  "main": "dist/vue2-preloader.ssr.js",
+  "browser": "dist/vue2-preloader.esm.js",
+  "module": "dist/vue2-preloader.esm.js",
+  "unpkg": "dist/vue2-preloader.min.js",
   "files": [
     "dist/*",
     "src/**/*.vue"
