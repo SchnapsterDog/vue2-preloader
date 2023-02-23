@@ -37,7 +37,6 @@ export default {
     backgroundColor: VueTypes.string.def('#091a28'),
     color: VueTypes.string.def('#ffffff'),
     loadingSpeed:  VueTypes.number.def(15),
-    transitionOn: VueTypes.bool.def(true),
     transitionSpeed:  VueTypes.number.def(1400)
   },
   data() {
@@ -79,7 +78,7 @@ export default {
     },
     transitionIsOver() {
       setTimeout(() => {
-        this.$emit('finish-loading')
+        this.$emit('transition-is-over')
         this.setOverflowAuto()
       }, this.transitionSpeed)
     },
