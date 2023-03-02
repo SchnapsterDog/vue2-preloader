@@ -83,10 +83,11 @@ layout/default.vue file in nuxt2:
   <vue-preloader
     background-color="#091a28"
     color="#ffffff"
+    transition-type="fade-up"
     :loading-speed="25"
     :transition-speed="1400"
-    @transition-is-over="transitionIsOver"
     @loading-is-over="loadingIsOver"
+    @transition-is-over="transitionIsOver"
   ></vue-preloader>
 </div>
 ```
@@ -105,6 +106,7 @@ The vue-preloader component comes with a default slot that allows you to customi
 <vue-preloader
   background-color="#091a28"
   color="#ffffff"
+  transition-type="fade-up"
   :loading-speed="25"
   :transition-speed="1400"
 >
@@ -118,10 +120,11 @@ Color and percent as slotprops values that come directly from the component, tog
 <vue-preloader
   background-color="#091a28"
   color="#ffffff"
+  transition-type="fade-up"
   :loading-speed="25"
   :transition-speed="1400"
-  @transition-is-over="transitionIsOver"
   @loading-is-over="showAnimation = false"
+  @transition-is-over="transitionIsOver"
 >
   <template v-slot="{ percent, color }">
     <transition name="loading-animation" mode="in-out">
@@ -144,6 +147,53 @@ export default {
   }
 }
 ```
+### Transitions
+
+The transition-type prop in the Vue preloader component specifies the type of fade animation that will be used when the preloader is removed from the screen. The transition-type prop accepts four possible values: fade-left, fade-right, fade-up, and fade-down. Each value specifies the direction in which the preloader will fade out of view. When the transition-type prop is not specified, the preloader will fade out of view towards the left.
+
+```html
+<VuePreloader
+  background-color="#091a28"
+  color="#ffffff"
+  transition-type="fade-up"
+  :loading-speed="25"
+  :transition-speed="1400"
+>
+</VuePreloader>
+```
+
+```html
+<VuePreloader
+  background-color="#091a28"
+  color="#ffffff"
+  transition-type="fade-down"
+  :loading-speed="25"
+  :transition-speed="1400"
+>
+</VuePreloader>
+```
+
+```html
+<VuePreloader
+  background-color="#091a28"
+  color="#ffffff"
+  transition-type="fade-left"
+  :loading-speed="25"
+  :transition-speed="1400"
+>
+</VuePreloader>
+```
+
+```html
+<VuePreloader
+  background-color="#091a28"
+  color="#ffffff"
+  transition-type="fade-right"
+  :loading-speed="25"
+  :transition-speed="1400"
+>
+</VuePreloader>
+```
 ### Available props
 
 | Name | Type | Default | Description |
@@ -152,6 +202,7 @@ export default {
 |**color**|`String`|`#ffffff`|This prop allows you to customize the color of loading bar.
 |**loading-speed**|`Number`|`15`|The loading-speed prop is used to adjust the speed of the loading bar. You can pass in a number value that represents the animation speed in milliseconds. A lower value will result in a faster animation, while a higher value will slow it down. This prop can take an integer value.
 |**transition-speed**|`Number`|`1400`|The transition-speed prop is used to adjust the speed of the transition between the preloader and the main content of your application. You can pass in a number value that represents the transition speed in milliseconds. A lower value will result in a faster transition, while a higher value will slow it down.
+|**transition-type**|`String`|`fade-left`|The transition-type prop accepts four possible values: fade-left, fade-right, fade-up, and fade-down. Each value specifies the direction in which the preloader will fade out of view. When the transition-type prop is not specified, the preloader will fade out of view towards the left.
 |**transition-is-over**|`Event`|`/`|The event transition-is-over is fired when the transition is over and the component is no longer available in the DOM. It can be useful to create logic when the vue-loader should be re-rendered.
 |**loading-is-over**|`Event`|`/`|The event loading-is-over is fired when the loading process is complete. This event can be useful to trigger other actions that depend on the completion of the loading process, such as displaying a success message or enabling certain user interactions.
 

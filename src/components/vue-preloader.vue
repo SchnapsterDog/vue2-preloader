@@ -3,8 +3,8 @@
     :class="$style.preloader"
     :style="[
       preloaderBackgroundColor,
-      preloaderTransition,
-      preloaderWidth
+      preloaderTransitionSpeed,
+      preloaderTransitionType
     ]"
   >
     <slot v-bind="{ color, percent }">
@@ -30,6 +30,7 @@
 </template>
 <script>
 import VueTypes from '../utils/vuetypes';
+import { transitionMap } from '../utils/transitionmap'
 
 export default {
   name: "VuePreloader",
@@ -37,7 +38,8 @@ export default {
     backgroundColor: VueTypes.string.def('#091a28'),
     color: VueTypes.string.def('#ffffff'),
     loadingSpeed:  VueTypes.number.def(15),
-    transitionSpeed:  VueTypes.number.def(1400)
+    transitionSpeed:  VueTypes.number.def(1400),
+    transitionType: VueTypes.string.def('fade-left')
   },
   data() {
     return {
@@ -48,11 +50,14 @@ export default {
     preloaderBackgroundColor() {
       return { backgroundColor: this.backgroundColor };
     },
-    preloaderTransition() {
+    preloaderTransitionSpeed() {
       return { transition: `all ${this.transitionSpeed}ms ease-in-out` };
     },
-    preloaderWidth() {
-      return this.percent >= 100 ? { width: '0%' } : '';
+    preloaderTransitionType() {
+      if (this.percent >= 100) {
+        return transitionMap[this.transitionType] || transitionMap.default
+      }
+      return
     }
   },
   watch: {

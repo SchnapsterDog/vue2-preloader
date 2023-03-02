@@ -13,7 +13,7 @@ export default Vue.extend({
 
 <template>
 	<div id="app">
-		<vue-preloader id="id">
+		<vue-preloader id="id" transition-type="fade-up">
 		</vue-preloader>
 	</div>
 </template>
